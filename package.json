@@ -1,0 +1,40 @@
+{
+  "name": "holybot",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
+    "antd": "^5.23.1",
+    "axios": "^1.7.9",
+    "crypto-js": "^4.2.0",
+    "date-fns": "^4.1.0",
+    "js-cookie": "^3.0.5",
+    "lucide-react": "^0.472.0",
+    "next": "15.1.4",
+    "next-themes": "^0.4.4",
+    "pdf-lib": "^1.17.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hot-toast": "^2.5.1",
+    "react-icons": "^5.4.0",
+    "react-otp-input": "^3.1.1",
+    "react-pdftotext": "^1.3.4",
+    "react-redux": "^9.2.0",
+    "react-simple-typewriter": "^5.0.1",
+    "sweetalert2": "^11.15.10",
+    "tesseract.js": "^4.1.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}
