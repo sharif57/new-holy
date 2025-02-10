@@ -465,14 +465,14 @@ const SignIn = () => {
               { required: true, message: "Please input your email!", type: "email" },
             ]}
           >
-            <Input placeholder="Email" className="rounded-lg" />
+            <Input placeholder="Email" className="rounded-lg py-3" />
           </Form.Item>
 
           <Form.Item
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <Input.Password placeholder="Password" className="rounded-lg" />
+            <Input.Password placeholder="Password" className="rounded-lg py-3" />
           </Form.Item>
 
           <div className="flex justify-end">
