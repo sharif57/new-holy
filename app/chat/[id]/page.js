@@ -94,7 +94,6 @@ const RoomPage = ({ params, searchParams }) => {
   }
 
   const ApiKey = process.env.NEXT_PUBLIC_API_KEY;
-  // console.log(ApiKey);
 
   const chatContainerRef = useRef(null); // Reference for chat container
 
