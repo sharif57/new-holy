@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import Image from "next/image";
 import Providers from "../Providers";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,10 +25,11 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-secondary-light text-[#3d3929]`}
       >
         {/* <div>{children}</div> */}
-      
 
         <Providers>
           <div className="">{children}</div>
+          
+          <Toaster />
         </Providers>
       </body>
     </html>

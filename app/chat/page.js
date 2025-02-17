@@ -424,16 +424,9 @@ const MainMessagePage = () => {
         } lg:translate-x-0`}
       >
         <aside className="h-full flex flex-col justify-between">
-          <div className="p-4 text-[#535136] text-center font-bold text-4xl border-b">
+          <div className="p-4 text-[#29261B] text-center font-bold text-4xl border-b">
             Holybot
           </div>
-
-          {/* <Link href={"/chat"}>
-            <div className="mt-3 text-center text-2xl font-semibold text-[#fb9b24] mb-3 flex items-center justify-center gap-2 cursor-pointer">
-              <MessageSquareDiff />
-              <h1>Start new chat </h1>
-            </div>
-          </Link> */}
           <Link href="/chat" onClick={() => window.location.reload()}>
             <div className="mt-3 text-center text-2xl font-semibold text-[#fb9b24] mb-3 flex items-center justify-center gap-2 cursor-pointer">
               <MessageSquareDiff />
@@ -504,7 +497,7 @@ const MainMessagePage = () => {
               <div className="flex justify-center sm:justify-start">
                 <img
                   src={
-                    // `http://192.168.10.199:5002/${userProfile?.data?.image}` ||
+                    // `http://159.89.186.224:5002/${userProfile?.data?.image}` ||
                     "/image/users.jpg"
                   }
                   // http://192.168.10.98:3000/${data?.data?.image}

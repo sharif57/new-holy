@@ -387,7 +387,6 @@ import { useRouter } from "next/navigation";
 import { useLoginMutation } from "../redux/features/authSlice";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import { useState } from "react";
 import Swal from "sweetalert2"; 
 
 const SignIn = () => {

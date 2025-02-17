@@ -8,13 +8,10 @@ import { formatDistanceToNow } from "date-fns";
 import { Search } from "lucide-react";
 import Link from "next/link";
 import { useAllHistoryQuery } from "../redux/features/quesationSlice";
-import { HiMenu } from "react-icons/hi";
 import { useUserProfileQuery } from "../redux/features/userSlice";
 
 const MainMessagePage = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar toggle state
   const { data: allHistory } = useAllHistoryQuery();
-  const { data: userProfile, isLoading, error } = useUserProfileQuery();
   const [filteredChats, setFilteredChats] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Current page for pagination
   const itemsPerPage = 7; // Items to show per page

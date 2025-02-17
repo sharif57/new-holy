@@ -4,8 +4,12 @@ import { BsArrowRight } from "react-icons/bs";
 import { TbMessage2Down } from "react-icons/tb";
 import SearchBar from "./components/SearchBar";
 import { useRouter } from "next/navigation";
+import { useUserProfileQuery } from "./redux/features/userSlice";
 
 export default function HomeFirstPage() {
+
+  const {data} =useUserProfileQuery()
+
   const getGreeting = () => {
     const currentHour = new Date().getHours();
 
@@ -54,8 +58,8 @@ export default function HomeFirstPage() {
                 alt="logo"
               />
             </div>
-            <h1 className="lg:text-[52px] text-3xl font-normal font-sans">
-              {getGreeting()}, Kevin
+            <h1 className="lg:text-[52px] text-3xl font-normal font-sans ">
+              {getGreeting()},  {data?.data?.name ? `${data.data.name}` : "HolyBot"}
             </h1>
           </div>
         </header>

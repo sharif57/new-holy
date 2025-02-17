@@ -68,6 +68,13 @@ const SearchBar = () => {
     }
   };
 
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevents form submission if inside a form
+      handleSearch();
+    }
+  };
+
   return (
     <div className="mb-6">
       {/* Wrapper for the search bar and textarea */}
@@ -77,6 +84,7 @@ const SearchBar = () => {
           className="w-full p-4 border-none text-lg resize-none rounded-t-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
           rows="4"
           placeholder="How can I help you today?"
+          onKeyDown={onKeyPress} // Handling Enter key press
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         ></textarea>

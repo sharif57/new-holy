@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 
 
 "use client";
@@ -476,7 +477,7 @@ const RoomPage = ({ params, searchParams }) => {
         } lg:translate-x-0`}
       >
         <aside className="h-full flex flex-col justify-between">
-          <div className="p-4 text-[#535136] text-center font-bold text-4xl border-b">
+          <div className="p-4 text-[#29261B] text-center font-bold text-4xl border-b">
             Holybot
           </div>
 
@@ -528,9 +529,9 @@ const RoomPage = ({ params, searchParams }) => {
               <div className="flex justify-center mt-6">
                 <Link
                   href="/history"
-                  className="inline-flex items-center gap-3 px-4 py-2 bg-blue-50 text-blue-600 font-medium text-sm rounded-lg shadow-sm hover:bg-blue-100 hover:shadow-md hover:text-blue-700 transition-all duration-300"
+                  className="inline-flex items-center gap-3 px-4 py-2 bg-[#ecebe5]  font-medium text-sm rounded-lg shadow-sm hover:bg-blue-100 hover:shadow-md hover:text-blue-700 transition-all duration-300"
                 >
-                  View All Previous Chats
+                    Chat History
                   <ArrowRightFromLine className="w-4 h-4" />
                 </Link>
               </div>
