@@ -271,13 +271,27 @@ const RoomPage = ({ params, searchParams }) => {
       ? parseInt(decryptData(encryptedZetaSession) || "0", 10)
       : 0;
 
-    if (!userProfile?.data?.subscription && zetaSession >= 3) {
-      alert(
-        "You have reached the free chat limit. Please subscribe to continue."
-      );
-      router.push("/payment");
-      return;
-    }
+    // if (!userProfile?.data?.subscription && zetaSession >= 3) {
+    //   alert(
+    //     "You have reached the free chat limit. Please subscribe to continue."
+    //   );
+    //   router.push("/payment");
+    //   return;
+    // }
+
+      if (!userProfile?.data?.subscription && zetaSession >= 3) {
+          Swal.fire({
+              title: "Free Chat Limit Reached",
+              text: "You have reached the free chat limit. Please subscribe to continue.",
+              icon: "warning",
+              confirmButtonText: "Subscribe Now"
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  router.push("/payment");
+              }
+          });
+          return;
+      }
 
     if (!question.trim() && !fileContent.trim()) {
       alert("Please provide a question or upload a file.");
@@ -446,7 +460,7 @@ const RoomPage = ({ params, searchParams }) => {
         Cookies.remove("accessToken", { path: "/" });
 
         // Redirect to auth page
-        router.push("/auth");
+        router.push("/login");
       }
     });
   };
@@ -526,15 +540,19 @@ const RoomPage = ({ params, searchParams }) => {
                   </Link>
                 ))}
               </div>
-              <div className="flex justify-center mt-6">
-                <Link
-                  href="/history"
-                  className="inline-flex items-center gap-3 px-4 py-2 bg-[#ecebe5]  font-medium text-sm rounded-lg shadow-sm hover:bg-blue-100 hover:shadow-md hover:text-blue-700 transition-all duration-300"
-                >
+              {allRoom?.data?.result ? (
+                <div className="flex justify-start pl-4 pt-28">
+                  <Link
+                    href="/history"
+                    className="inline-flex items-center gap-3 px-4 py-2 bg-[#ecebe5]  font-medium text-sm rounded-lg shadow-sm hover:bg-blue-100 hover:shadow-md hover:text-blue-700 transition-all duration-300"
+                  >
                     Chat History
-                  <ArrowRightFromLine className="w-4 h-4" />
-                </Link>
-              </div>
+                    <ArrowRightFromLine className="w-4 h-4" />
+                  </Link>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
 

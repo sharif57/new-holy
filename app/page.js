@@ -31,7 +31,7 @@ export default function HomeFirstPage() {
       router.push("/history");
     } else {
       // Navigate to the auth page if token does not exist
-      router.push("/auth");
+      router.push("/login");
     }
   };
 
@@ -55,10 +55,10 @@ export default function HomeFirstPage() {
                 height={100}
                 className="w-[40px] h-[60px] md:w-[80px] md:h-[120px] bg-center mx-auto"
                 src="/image/logo.png"
-                alt="logo"
+                alt="logo"  
               />
             </div>
-            <h1 className="lg:text-[52px] text-3xl font-normal font-sans ">
+            <h1 className="lg:text-[52px] text-3xl font-normal font-sans leading-normal">
               {getGreeting()},  {data?.data?.name ? `${data.data.name}` : "HolyBot"}
             </h1>
           </div>

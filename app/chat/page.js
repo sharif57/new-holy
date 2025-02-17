@@ -120,11 +120,25 @@ const MainMessagePage = () => {
         ? parseInt(decryptData(encryptedZetaSession) || "0", 10)
         : 0;
 
+    // if (!userProfile?.data?.subscription && zetaSession >= 3) {
+    //     alert("You have reached the free chat limit. Please subscribe to continue.");
+    //     router.push("/payment");
+    //     return;
+    // }
+
     if (!userProfile?.data?.subscription && zetaSession >= 3) {
-        alert("You have reached the free chat limit. Please subscribe to continue.");
-        router.push("/payment");
-        return;
-    }
+      Swal.fire({
+          title: "Free Chat Limit Reached",
+          text: "You have reached the free chat limit. Please subscribe to continue.",
+          icon: "warning",
+          confirmButtonText: "Subscribe Now"
+      }).then((result) => {
+          if (result.isConfirmed) {
+              router.push("/payment");
+          }
+      });
+      return;
+  }
 
     if (!question.trim() && !fileContent.trim()) {
         alert("Please provide a question or upload a file.");
@@ -141,19 +155,7 @@ const MainMessagePage = () => {
 
         console.log(fileName,'filename', )
 
-    // const renderedQuestion = formattedFileContent ? (
-    //     <div className="flex flex-col bg-gray-100 p-4 rounded-lg shadow-md">
-    //         <div className="flex items-center gap-2 text-gray-700 font-medium">
-    //             <FileText className="text-pink-500" />
-    //             <span className="truncate">{fileName}</span>
-    //         </div>
-    //         <p className="mt-2 bg-[#DEDCD1] text-gray-900 p-3 rounded-lg shadow-sm">
-    //             {question}
-    //         </p>
-    //     </div>
-    // ) : (
-    //     <p className="text-gray-900">{question}</p>
-    // );
+    
 
     const renderedQuestion = formattedFileContent ? (
       <div className="flex flex-col   p-4 rounded-lg ">
@@ -272,112 +274,7 @@ const MainMessagePage = () => {
 };
 
 
-  // const generateAnswer = async (e) => {
-  //     e.preventDefault();
-  //     setQuestion("");
-
-  //     let encryptedZetaSession = sessionStorage.getItem("zetaSession");
-  //     let zetaSession = encryptedZetaSession
-  //         ? parseInt(decryptData(encryptedZetaSession) || "0", 10)
-  //         : 0;
-
-  //     if (!userProfile?.data?.subscription && zetaSession >= 3) {
-  //         alert("You have reached the free chat limit. Please subscribe to continue.");
-  //         router.push("/payment");
-  //         return;
-  //     }
-
-  //     if (!question.trim() && !fileContent.trim()) {
-  //         alert("Please provide a question or upload a file.");
-  //         return;
-  //     }
-
-  //     setGeneratingAnswer(true);
-
-  //     // JSX for UI rendering (file name only)
-  // const renderedQuestion = fileContent ? (
-  //     <>
-  //         <FileText className="text-pink-500" /> {fileName}
-  //     </>
-  // ) : (
-  //     question
-  // );
-
-  //     // Ensure OpenAI gets the full content, not just file name
-  //     const currentQuestion = fileContent
-  //         ? `Here is a text file content: "${fileContent}". Based on this, provide a Bible-related answer.`
-  //         : question;
-
-  //     console.log(currentQuestion, "question");
-
-  //     setChatHistory((prev) => [
-  //         ...prev,
-  //         { type: "question", content: renderedQuestion },
-  //     ]);
-
-  //     try {
-  //         if (!currentQuestion.trim()) throw new Error("Question cannot be empty");
-
-  //         const response = await axios.post(
-  //             "https://api.openai.com/v1/chat/completions",
-  //             {
-  //                 model: "gpt-4",
-  //                 messages: [
-  //                     {
-  //                         role: "system",
-  //                         content: "You are a helpful assistant that only answers Bible-related questions.",
-  //                     },
-  //                     { role: "user", content: currentQuestion },
-  //                 ],
-  //                 max_tokens: 150,
-  //             },
-  //             {
-  //                 headers: {
-  //                     "Content-Type": "application/json",
-  //                     Authorization: `Bearer ${ApiKey}`,
-  //                 },
-  //             }
-  //         );
-
-  //         if (!response?.data?.choices?.[0]?.message?.content) {
-  //             throw new Error("Invalid response from OpenAI.");
-  //         }
-
-  //         const aiResponse = response.data.choices[0].message.content.trim();
-
-  //         setChatHistory((prev) => [
-  //             ...prev,
-  //             { type: "answer", content: aiResponse },
-  //         ]);
-
-  //         if (!userProfile?.data?.subscription) {
-  //             zetaSession += 1;
-  //             sessionStorage.setItem("zetaSession", encryptData(zetaSession.toString()));
-
-  //             if (zetaSession > 3) {
-  //                 alert("You have reached your free chat limit. Redirecting to payment...");
-  //                 router.push("/payment");
-  //                 return;
-  //             }
-  //         } else {
-  //             router.replace(router.asPath);
-  //         }
-  //     } catch (error) {
-  //         console.error("Error fetching response:", error);
-  //         setChatHistory((prev) => [
-  //             ...prev,
-  //             {
-  //                 type: "answer",
-  //                 content: "Sorry - Something went wrong. Please try again!",
-  //             },
-  //         ]);
-  //     }
-
-  //     setGeneratingAnswer(false);
-  //     setFileContent("");
-  //     setFileName("");
-  //     setQuestion("");
-  // };
+  
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -404,7 +301,7 @@ const MainMessagePage = () => {
         Cookies.remove("accessToken", { path: "/" });
 
         // Redirect to auth page
-        router.push("/auth");
+        router.push("/login");
       }
     });
   };
