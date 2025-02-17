@@ -27,7 +27,7 @@ export default function HomeFirstPage() {
   const handleViewAll = () => {
     const accessToken = localStorage.getItem("accessToken"); // Retrieve accessToken from localStorage
     if (accessToken) {
-      // Navigate to the history page if token exists
+      
       router.push("/history");
     } else {
       // Navigate to the auth page if token does not exist

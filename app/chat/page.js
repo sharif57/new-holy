@@ -1,10 +1,6 @@
 
 
 
-
-// =================================================================================================
-
-
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -57,11 +53,6 @@ const MainMessagePage = () => {
 
   const router = useRouter();
 
-  // if (questionGetAll?.data?.result) {
-  //   questionGetAll.data.result.forEach((item) => {
-  //     // console.log(item.question);
-  //   });
-  // }
 
   const ApiKey = process.env.NEXT_PUBLIC_API_KEY;
 
