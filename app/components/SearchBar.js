@@ -63,7 +63,7 @@ const SearchBar = () => {
         router.push(`/chat?searchQuery=${encodeURIComponent(query)}`);
       } else {
         // Redirect to the auth page if token does not exist
-        router.push(`/auth`);
+        router.push(`/login`);
       }
     }
   };
