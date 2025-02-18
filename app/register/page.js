@@ -28,7 +28,7 @@ const Register = () => {
       }
   
       if (res.data) {
-        console.log("Success Response:", res.data);
+      
         toast.success(res.data?.message || "Account created successfully!");
         form.resetFields();
         router.push(`/otp?email=${email}`); // Pass email to OTP page

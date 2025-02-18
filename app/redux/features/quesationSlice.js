@@ -64,19 +64,6 @@ export const questionApi = baseApi.injectEndpoints({
     }),
 
 
-    // request: builder.query({
-    //   query: (_id) => {
-    //     console.log("Querying answers for ID:", _id); // Logs the _id
-    //     return {
-    //       url: `/request/get-all/${_id}`,
-    //       method: "GET",
-    //       headers: {
-    //         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    //       },
-    //     };
-    //   },
-    //   providesTags: ["Answer"], // Marks the fetched data with the "Answer" tag
-    // }),
 
 
   }),

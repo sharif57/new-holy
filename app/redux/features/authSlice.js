@@ -79,8 +79,7 @@ export const authApi = createApi({
         if (typeof window !== "undefined") {
           // Safely fetch the token from sessionStorage
           const token = localStorage.getItem('Authorization');
-          console.log(token,'dsd')
-          console.log(data,'data')
+        
           if (!token) {
             throw new Error("No token found. Please verify your email again.");
           }

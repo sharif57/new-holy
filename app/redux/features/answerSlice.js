@@ -16,7 +16,7 @@ export const answerApi = baseApi.injectEndpoints({
 
     getAllAns: builder.query({
       query: (_id) => {
-        console.log("Querying answers for ID:", _id); // Logs the _id
+     
         return {
           url: `/answer/get-all-answer/${_id}`,
           method: "GET",

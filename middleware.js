@@ -1,45 +1,30 @@
-import { NextResponse } from "next/server";
 
-const AuthRoutes = ["/auth", "/register"];
-const PrivateRoutes = ["/chat", "/chat/:page", "/payment", "/history"];
 
-export async function middleware(request) {
-  try {
-    const { pathname } = request.nextUrl;
-    console.log(pathname,'ddddddddddddddddddddddddddddd');
 
-    // ✅ Get accessToken from cookies
-    const token = request.cookies.get("accessToken")?.value;
+import { NextResponse } from 'next/server'
+import { getCurrentUser } from './app/service/authService'
+ 
+// This function can be marked `async` if using `await` inside
+export async function middleware (request) {
 
-    console.log(token, "accessToken")
-    
-    if (!token) {
-      if (AuthRoutes.includes(pathname)) {
-        return NextResponse.next();
-      }
-      return NextResponse.redirect(
-        new URL(`/auth?redirect=${encodeURIComponent(pathname)}`, request.url)
-      );
-    }
+  const token=await getCurrentUser()
 
-    // ✅ Allow access to private routes only if the token exists
-    if (PrivateRoutes.includes(pathname) && !token) {
-      return NextResponse.redirect(new URL("/auth", request.url));
-    }
 
-    return NextResponse.next();
-  } catch (error) {
-    console.error("Middleware error:", error);
-    return NextResponse.redirect(new URL("/error", request.url));
-  }
+  if (!token) {
+    return NextResponse.redirect(
+      new URL('/login', request.url)
+    )
+  }  // Check if user is authenticated before serving the page
+
+  return NextResponse.next()
 }
-
-// ✅ Middleware matcher config
+ 
+// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
-    '/chat',
-    "/chat/:page",
-    "/payment",
-    "/history",
-  ],
-};
+       '/chat',
+   "/chat/:page",
+   "/payment",
+   "/history",
+  ]
+}

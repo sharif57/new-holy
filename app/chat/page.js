@@ -32,6 +32,7 @@ import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { MdPayment } from "react-icons/md";
 import { Typewriter } from "react-simple-typewriter";
+import { logout } from "../service/authService";
 
 const MainMessagePage = () => {
   const [postAnswer] = useAnswerPostMutation();
@@ -144,7 +145,7 @@ const MainMessagePage = () => {
         ? `${formattedFileContent}===>${question}`
         : question;
 
-        console.log(fileName,'filename', )
+
 
     
 
@@ -183,7 +184,7 @@ const MainMessagePage = () => {
             { role: "user", content: currentQuestion },
         ];
 
-        console.log(messages, '===messages===');
+
 
         const response = await axios.post(
             "https://api.openai.com/v1/chat/completions",
@@ -214,8 +215,7 @@ const MainMessagePage = () => {
             path:fileName,
             createRoom: "true",
         };
-        console.log(questionData,'data')
-        
+  
 
         const questionThisRoomData = {
             question: currentQuestion,
@@ -274,28 +274,56 @@ const MainMessagePage = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogOut = () => {
-    Swal.fire({
+  // const handleLogOut = async() => {
+  //   Swal.fire({
+  //     text: "Are you sure you want to logout?",
+  //     showCancelButton: true,
+  //     confirmButtonText: "Sure",
+  //     cancelButtonText: "Cancel",
+  //     confirmButtonColor: "#DC2626",
+  //     reverseButtons: true,
+  //   }).then((res) => {
+  //     if (res.isConfirmed) {
+  //       // Remove tokens from localStorage
+  //       localStorage.removeItem("accessToken");
+  //       localStorage.removeItem("refreshToken");
+
+  //       // Remove cookies with path
+  //       Cookies.remove("accessToken", { path: "/" });
+
+  //       // Redirect to auth page
+  //       router.push("/login");
+  //     }
+  //   });
+  //   await logout()
+  // };
+
+  const handleLogOut = async () => {
+    const res = await Swal.fire({
       text: "Are you sure you want to logout?",
       showCancelButton: true,
       confirmButtonText: "Sure",
       cancelButtonText: "Cancel",
       confirmButtonColor: "#DC2626",
       reverseButtons: true,
-    }).then((res) => {
-      if (res.isConfirmed) {
-        // Remove tokens from localStorage
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-
-        // Remove cookies with path
-        Cookies.remove("accessToken", { path: "/" });
-
-        // Redirect to auth page
-        router.push("/login");
-      }
     });
+  
+    if (res.isConfirmed) {
+      // Remove tokens from localStorage
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+  
+      // Remove cookies with path
+      Cookies.remove("accessToken", { path: "/" });
+  
+      // Call logout function
+      await logout();
+  
+      // Redirect to auth page
+      router.push("/login");
+    }
   };
+  
   // Reset chat limit when user subscribes
   useEffect(() => {
     if (userProfile?.data?.subscription) {

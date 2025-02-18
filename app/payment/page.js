@@ -84,7 +84,7 @@ function App() {
     }
 
     if (isAlreadySubscribed) {
-      console.log("Already subscribed to this package.");
+   
       return;
     }
 
@@ -92,7 +92,7 @@ function App() {
       const result = await packagePost({
         packageId: selectedPackage._id,
       }).unwrap();
-      console.log("Package subscribed successfully:", result);
+    
 
       // Save the Stripe payment URL
       if (result?.url) {

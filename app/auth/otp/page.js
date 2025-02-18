@@ -15,7 +15,7 @@ function RVerifyEmail() {
 
   const email = searchParams.get("email");
 
-  console.log(email, 'email');
+
 
   const handleSubmit = async () => {
     const optNumber = parseInt(otp);
@@ -27,9 +27,9 @@ function RVerifyEmail() {
 
     try {
       const result = await verifyEmail({ email, oneTimeCode: optNumber }); // Use verifyEmail
-      console.log(result, 'asdadasd');
+    
       router.push("/auth");
-      console.log(result, 'asdadasd');
+    
     } catch (error) {
       toast.error("Failed to verify email. Please try again.");
       console.error("Error verifying email:", error);

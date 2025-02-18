@@ -22,14 +22,11 @@ import { useRouter } from "next/navigation";
 import CryptoJS from "crypto-js";
 import {
   useAnswerPostMutation,
-  useGetAllAnsQuery,
 } from "@/app/redux/features/answerSlice";
 import {
-  usePreviousQuery,
   useQuestionGetAllQuery,
   useQuestionPostMutation,
   useRequestAllRoomDataQuery,
-  useRequestQuery,
 } from "@/app/redux/features/quesationSlice";
 import { useUserProfileQuery } from "@/app/redux/features/userSlice";
 import {
@@ -41,6 +38,7 @@ import Swal from "sweetalert2";
 import { MdPayment } from "react-icons/md";
 import { Typewriter } from "react-simple-typewriter";
 import Cookies from "js-cookie";
+import { logout } from "@/app/service/authService";
 
 const RoomPage = ({ params, searchParams }) => {
   const [id, setId] = useState(null);
@@ -48,10 +46,7 @@ const RoomPage = ({ params, searchParams }) => {
   // const { data } = useGetAllAnsQuery(id);
   // const { data } = useRequestQuery(id);
   const { data } = useRequestAllRoomDataQuery(id);
-  console.log(data, "====================data ===============");
-  // console.log(typeof(data),'=====================> query')
-
-  console.log(data, "=======================");
+  
 
   useEffect(() => {
     const getId = async () => {
@@ -63,9 +58,7 @@ const RoomPage = ({ params, searchParams }) => {
 
   const results = data?.data?.result || [];
 
-  const answerData = data?.data;
-  const answer = answerData?.answer;
-  const questions = answerData?.questionId?.question;
+
 
   const { data: recentRoom } = useRecentRoomQuery();
 
@@ -90,7 +83,7 @@ const RoomPage = ({ params, searchParams }) => {
 
   if (questionGetAll?.data?.result) {
     questionGetAll.data.result.forEach((item) => {
-      // console.log(item.question);
+      
     });
   }
 
@@ -119,7 +112,7 @@ const RoomPage = ({ params, searchParams }) => {
     }
   };
 
-  console.log(id, "asdasdasdasdasdasdasdasd");
+
 
   const SECRET_KEY = process.env.NEXT_PUBLIC_HELLO; // Replace with a strong secret key
 
@@ -139,128 +132,7 @@ const RoomPage = ({ params, searchParams }) => {
     }
   };
 
-  // const generateAnswer = async (e) => {
-  //   e.preventDefault();
 
-  //   let encryptedZetaSession = sessionStorage.getItem("zetaSession");
-  //   let zetaSession = encryptedZetaSession
-  //     ? parseInt(decryptData(encryptedZetaSession) || "0", 10)
-  //     : 0;
-
-  //   if (!userProfile?.data?.subscription && zetaSession >= 3) {
-  //     alert(
-  //       "You have reached the free chat limit. Please subscribe to continue."
-  //     );
-  //     router.push("/payment");
-  //     return;
-  //   }
-
-  //   if (!question.trim() && !fileContent.trim()) {
-  //     alert("Please provide a question or upload a file.");
-  //     return;
-  //   }
-
-  //   setGeneratingAnswer(true);
-
-  //   const currentQuestion = fileContent
-  //     ? `Based on the following text file content, provide a Bible-related answer: ${fileContent}`
-  //     : question;
-
-  //   console.log(currentQuestion, "question");
-
-  //   setChatHistory((prev) => [
-  //     ...prev,
-  //     { type: "question", content: currentQuestion },
-  //   ]);
-
-  //   try {
-  //     if (!currentQuestion) throw new Error("Question cannot be empty");
-
-  //     const response = await axios.post(
-  //       "https://api.openai.com/v1/chat/completions",
-  //       {
-  //         model: "gpt-4",
-  //         messages: [
-  //           {
-  //             role: "system",
-  //             content:
-  //               "You are a helpful assistant that only answers Bible-related questions.",
-  //           },
-  //           { role: "user", content: currentQuestion },
-  //         ],
-  //         max_tokens: 150,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${ApiKey}`,
-  //         },
-  //       }
-  //     );
-
-  //     console.log(response, "res iiojlkjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
-
-  //     if (!response?.data?.choices?.[0]?.message?.content) {
-  //       throw new Error("Invalid response from OpenAI.");
-  //     }
-
-  //     const aiResponse = response.data.choices[0].message.content.trim();
-  //     const results = data?.data?.result?.roomName;
-
-  //     const questionData = {
-  //       question: currentQuestion,
-  //       answer: aiResponse,
-  //       room: results,
-  //     };
-
-  //     console.log(questionData, "new quesation ksdlfjlk");
-
-  //     console.log(questionData, "question data");
-
-  //     const answerResponse = await postQuestion(questionData);
-
-  //     if (!answerResponse) {
-  //       throw new Error("Error saving answer to the database.");
-  //     }
-
-  //     setChatHistory((prev) => [
-  //       ...prev,
-  //       { type: "answer", content: aiResponse },
-  //     ]);
-
-  //     if (!userProfile?.data?.subscription) {
-  //       zetaSession += 1;
-  //       sessionStorage.setItem(
-  //         "zetaSession",
-  //         encryptData(zetaSession.toString())
-  //       );
-
-  //       if (zetaSession > 3) {
-  //         alert(
-  //           "You have reached your free chat limit. Redirecting to payment..."
-  //         );
-  //         router.push("/payment");
-  //         return;
-  //       }
-  //     } else {
-  //       router.replace(router.asPath);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching response:", error.message);
-  //     setChatHistory((prev) => [
-  //       ...prev,
-  //       {
-  //         type: "answer",
-  //         content: "Sorry - Something went wrong. Please try again!",
-  //       },
-  //     ]);
-  //   }
-
-  //   setGeneratingAnswer(false);
-  //   setFileContent("");
-  //   setFileName("");
-  //   setQuestion("");
-  // };
 
   const generateAnswer = async (e) => {
     e.preventDefault();
@@ -308,7 +180,7 @@ const RoomPage = ({ params, searchParams }) => {
       ? `${formattedFileContent}===>${question}`
       : question;
 
-    console.log(currentQuestion, "question");
+
 
     setChatHistory((prev) => [
       ...prev,
@@ -328,10 +200,7 @@ const RoomPage = ({ params, searchParams }) => {
           )
         );
 
-        console.log(
-          demoList,
-          "================================> Demo Chat History"
-        );
+    
 
         return demoList;
       };
@@ -364,7 +233,7 @@ const RoomPage = ({ params, searchParams }) => {
         }
       );
 
-      console.log(response, "res");
+  
 
       if (!response?.data?.choices?.[0]?.message?.content) {
         throw new Error("Invalid response from OpenAI.");
@@ -381,10 +250,6 @@ const RoomPage = ({ params, searchParams }) => {
         room: results[0].room.roomName,
       };
 
-      console.log(
-        questionData,
-        "hjksd;fd;fd;fd;fd;fd;fd;fd;fd;fd;fd;fd;fd;fd;fd;fd;fd;fd;fd;fd;f"
-      );
 
       const answerResponse = await postQuestion(questionData);
 
@@ -442,28 +307,56 @@ const RoomPage = ({ params, searchParams }) => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogOut = () => {
-    Swal.fire({
-      text: "Are you sure you want to logout?",
-      showCancelButton: true,
-      confirmButtonText: "Sure",
-      cancelButtonText: "Cancel",
-      confirmButtonColor: "#DC2626",
-      reverseButtons: true,
-    }).then((res) => {
+  // const handleLogOut = async() => {
+  //   Swal.fire({
+  //     text: "Are you sure you want to logout?",
+  //     showCancelButton: true,
+  //     confirmButtonText: "Sure",
+  //     cancelButtonText: "Cancel",
+  //     confirmButtonColor: "#DC2626",
+  //     reverseButtons: true,
+  //   }).then((res) => {
+  //     if (res.isConfirmed) {
+  //       // Remove tokens from localStorage
+  //       localStorage.removeItem("accessToken");
+  //       localStorage.removeItem("refreshToken");
+
+  //       // Remove cookies with path
+  //       Cookies.remove("accessToken", { path: "/" });
+
+  //       // Redirect to auth page
+  //       router.push("/login");
+  //     }
+  //   });
+  //   await logout()
+  // };
+
+
+  const handleLogOut = async () => {
+      const res = await Swal.fire({
+        text: "Are you sure you want to logout?",
+        showCancelButton: true,
+        confirmButtonText: "Sure",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#DC2626",
+        reverseButtons: true,
+      });
+    
       if (res.isConfirmed) {
         // Remove tokens from localStorage
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-
+    
         // Remove cookies with path
         Cookies.remove("accessToken", { path: "/" });
-
+    
+        // Call logout function
+        await logout();
+    
         // Redirect to auth page
         router.push("/login");
       }
-    });
-  };
+    };
 
   // Reset chat count when the user subscribes
   useEffect(() => {

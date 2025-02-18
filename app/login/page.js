@@ -5,6 +5,7 @@ import { useLoginMutation } from "../redux/features/authSlice";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2"; 
+import { saveTokens } from "../service/authService";
 
 const SignIn = () => {
   const router = useRouter();
@@ -18,6 +19,8 @@ const SignIn = () => {
       }).unwrap(); // Unwrap the promise to handle errors explicitly
 
       if (response.success) {
+      
+        await saveTokens(response.data.accessToken)
         localStorage.setItem("accessToken", response.data.accessToken);
         Cookies.set("accessToken", response.data.accessToken, {
           expires: 1,
@@ -27,7 +30,7 @@ const SignIn = () => {
         });
         localStorage.setItem("refreshToken", response.data.refreshToken);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-
+         
         Swal.fire({
           title: "Login Successful!",
           text: "You have successfully logged in.",
@@ -35,7 +38,6 @@ const SignIn = () => {
           timer: 1500,
           showConfirmButton: false,
         });
-
         setTimeout(() => {
           router.push("/chat"); 
         }, 1500);
