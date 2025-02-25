@@ -413,7 +413,7 @@ const MainMessagePage = () => {
               <div className="flex justify-center sm:justify-start">
                 <img
                   src={
-                    // `http://159.89.186.224:5002/${userProfile?.data?.image}` ||
+                    // `https://backend.holybot.ai/${userProfile?.data?.image}` ||
                     "/image/users.jpg"
                   }
                   // http://192.168.10.98:3000/${data?.data?.image}
