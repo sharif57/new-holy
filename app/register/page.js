@@ -1,5 +1,3 @@
-
-
 "use client";
 import { Form, Input } from "antd";
 import Link from "next/link";
@@ -13,22 +11,20 @@ const Register = () => {
   const router = useRouter();
   const [register, { isLoading }] = useRegisterMutation();
 
-
   const handleSubmit = async (values) => {
     const { name, email, password } = values;
     const payload = { name, email, password };
-  
+
     try {
       const res = await register(payload);
-  
+
       if (res.error) {
         console.error("Error Response:", res.error);
         toast.error(res.error?.data?.message || "Registration failed!");
         return;
       }
-  
+
       if (res.data) {
-      
         toast.success(res.data?.message || "Account created successfully!");
         form.resetFields();
         router.push(`/otp?email=${email}`); // Pass email to OTP page
@@ -38,11 +34,10 @@ const Register = () => {
       toast.error(error.message || "An unexpected error occurred!");
     }
   };
-  
 
   return (
-    <div className="w-full h-screen px-5 flex justify-center items-center">
-      <div className="bg-white py-10 px-8 rounded-lg shadow-md w-[500px] mx-1">
+    <div className="w-full h-screen lg:px-5 px-2 flex justify-center items-center">
+      <div className="bg-white py-10 lg:px-8 rounded-lg shadow-md w-[500px] mx-1">
         {/* Form Section */}
         <div className={" p-5"}>
           <Form
@@ -52,7 +47,7 @@ const Register = () => {
             className="space-y-5"
           >
             <div className="text-center space-y-3">
-              <h1 className="text-2xl font-semibold">Create an Account</h1>
+              <h1 className="text-[30px] font-semibold text-primaryText">Create an Account</h1>
               <p>Hello there, let’s start your journey with us.</p>
             </div>
 
@@ -113,10 +108,23 @@ const Register = () => {
             </div>
 
             {/* Login Link */}
-            <div className="mt-5 text-center">
+            {/* <div className="mt-5 text-center">
               <span>Already have an account? </span>
-              <Link href="/login" className="underline text-blue-300 font-medium text-xs">
+              <Link
+                href="/login"
+                className="underline text-blue-300 font-medium text-xs"
+              >
                 Log In
+              </Link>
+            </div> */}
+            <div className="flex justify-center items-center gap-2 mt-6 text-sm text-gray-600">
+              <p className="lg:text-lg">Already have an account?</p>
+              <Link href="/login" passHref>
+                <button
+                  className="lg:text-lg text-black  hover:text-primary-dark font-medium p-0 h-auto transition-colors duration-200"
+                >
+                  Log In
+                </button>
               </Link>
             </div>
           </Form>
@@ -127,4 +135,3 @@ const Register = () => {
 };
 
 export default Register;
-

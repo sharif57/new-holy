@@ -5,10 +5,13 @@ import { TbMessage2Down } from "react-icons/tb";
 import SearchBar from "./components/SearchBar";
 import { useRouter } from "next/navigation";
 import { useUserProfileQuery } from "./redux/features/userSlice";
+import Link from "next/link";
+import { useRecentGetForAllQuery } from "./redux/features/roomSlice";
 
 export default function HomeFirstPage() {
+  const { data } = useUserProfileQuery();
 
-  const {data} =useUserProfileQuery()
+  const { data: recentChat } = useRecentGetForAllQuery();
 
   const getGreeting = () => {
     const currentHour = new Date().getHours();
@@ -27,7 +30,6 @@ export default function HomeFirstPage() {
   const handleViewAll = () => {
     const accessToken = localStorage.getItem("accessToken"); // Retrieve accessToken from localStorage
     if (accessToken) {
-      
       router.push("/history");
     } else {
       // Navigate to the auth page if token does not exist
@@ -44,9 +46,11 @@ export default function HomeFirstPage() {
             <span className="lg:text-[16px] font-normal ">
               Using limited free plan
             </span>
-            <button className=" text-[#ffad36] lg:px-3 py-1 ml-2 font-bold lg:text-[20px]">
-              Upgrade
-            </button>
+            <Link href="payment">
+              <button className=" text-[#ffad36] lg:px-3 py-1 ml-2 font-bold lg:text-[20px]">
+                Upgrade
+              </button>
+            </Link>
           </div>
           <div className="lg:flex justify-center items-center gap-5">
             <div className="text-center">
@@ -55,11 +59,12 @@ export default function HomeFirstPage() {
                 height={100}
                 className="w-[40px] h-[60px] md:w-[80px] md:h-[120px] bg-center mx-auto"
                 src="/image/logo.png"
-                alt="logo"  
+                alt="logo"
               />
             </div>
             <h1 className="lg:text-[52px] text-3xl font-normal font-sans leading-normal">
-              {getGreeting()},  {data?.data?.name ? `${data.data.name}` : "HolyBot"}
+              {getGreeting()},{" "}
+              {data?.data?.name ? `${data.data.name}` : "HolyBot"}
             </h1>
           </div>
         </header>
@@ -120,15 +125,21 @@ export default function HomeFirstPage() {
                   </div>
                 </div>
                 <div className="lg:flex gap-3 mt-4 lg:space-y-0 space-y-4">
-                  <button className="bg-[#e9e6dd] border-2 border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200">
-                    What is the main message of the Bible?
-                  </button>
-                  <button className="bg-[#e9e6dd] border-2 border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200">
-                    What is the shortest verse in the Bible?
-                  </button>
-                  <button className="bg-[#e9e6dd] border-2 border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200">
-                    What did Jesus do at the Last Supper?
-                  </button>
+                  <Link href={"/chat"}>
+                    <button className="bg-[#e9e6dd] border-2 border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200">
+                      What is the main message of the Bible?
+                    </button>
+                  </Link>
+                  <Link href={"/chat"}>
+                    <button className="bg-[#e9e6dd] border-2 border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200">
+                      What is the shortest verse in the Bible?
+                    </button>
+                  </Link>
+                  <Link href={"/chat"}>
+                    <button className="bg-[#e9e6dd] border-2 border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200">
+                      What did Jesus do at the Last Supper?
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -163,22 +174,35 @@ export default function HomeFirstPage() {
                 </button>
               </div>
             </div>
+            {/* <div className="lg:flex gap-4 lg:space-y-0 space-y-4 ">
+              {recentChat?.data?.result?.slice(0, 3).map((chat) => (
+                <div
+                  key={chat._id}
+                  className="bg-white   p-4 rounded-md shadow-md space-y-2"
+                >
+                  <TbMessage2Down className="size-7 text-gray-400" />
+                  <h1>{chat.question}</h1>
+                  <p className="text-gray-400">2 days</p>
+                </div>
+              ))}
+            </div> */}
             <div className="lg:flex gap-4 lg:space-y-0 space-y-4">
-              <div className="bg-white p-4 rounded-md shadow-md space-y-2">
-                <TbMessage2Down className="size-7 text-gray-400" />
-                <h1>Debating about some Bible questions.</h1>
-                <p className="text-gray-400">2 days</p>
-              </div>
-              <div className="bg-white p-4 rounded-md shadow-md space-y-2">
-                <TbMessage2Down className="size-7 text-gray-400" />
-                <h1>How should Christians handle suffering and trials?</h1>
-                <p className="text-gray-400">2 days</p>
-              </div>
-              <div className="bg-white p-4 rounded-md shadow-md space-y-2">
-                <TbMessage2Down className="size-7 text-gray-400" />
-                <h1>What are the signs of Jesus second coming?</h1>
-                <p className="text-gray-400">2 days</p>
-              </div>
+              {recentChat?.data?.result?.slice(0, 3).map((chat) => (
+                <div
+                  key={chat._id}
+                  className="bg-white p-4 rounded-md shadow-md space-y-2 lg:w-64 h-40" 
+                >
+                  <TbMessage2Down className="size-7 text-gray-400" />
+                  <h1 className="truncate text-wrap">{chat?.question}</h1>{" "}
+                  <p className="text-gray-400">
+                    {new Date(chat?.createdAt).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
+                </div>
+              ))}
             </div>
           </section>
 

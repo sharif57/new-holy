@@ -2,7 +2,6 @@ import baseApi from "../api/baseApi";
 
 export const roomApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-
     recentRoom: builder.query({
       query: () => ({
         url: "/room/get-recent-rooms",
@@ -13,7 +12,6 @@ export const roomApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Room"],
     }),
-
 
     allRoom: builder.query({
       query: () => ({
@@ -26,9 +24,14 @@ export const roomApi = baseApi.injectEndpoints({
       providesTags: ["Room"],
     }),
 
-
-
+    recentGetForAll: builder.query({
+      query: () => ({
+        url: "/request/get-for-all",
+        method: "GET",
+        providesTags: ["Room"],
+      }),
+    }),
   }),
 });
 
-export const { useRecentRoomQuery, useAllRoomQuery} = roomApi;
+export const { useRecentRoomQuery, useAllRoomQuery , useRecentGetForAllQuery} = roomApi;

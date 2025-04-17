@@ -1,10 +1,9 @@
-
-
-'use client'
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaArrowUp } from "react-icons/fa";
+import Link from "next/link";
 
 const SearchBar = () => {
   const [query, setQuery] = useState(""); // State to hold the search query
@@ -12,13 +11,13 @@ const SearchBar = () => {
 
   const handleSearch = () => {
     if (query.trim()) {
-      const accessToken = localStorage.getItem('accessToken'); // Retrieve accessToken from localStorage
+      const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
         // Redirect to the chat page if token exists
         router.push(`/chat?searchQuery=${encodeURIComponent(query)}`);
       } else {
         // Redirect to the auth page if token does not exist
-        router.push('/login');
+        router.push("/login");
       }
     }
   };
@@ -45,13 +44,16 @@ const SearchBar = () => {
         ></textarea>
 
         {/* Button to trigger the search */}
-        <button
-          onClick={handleSearch}
-          className="w-full border-gray-700 bg-secondary-dark text-white py-2 flex gap-3 justify-center items-center rounded-b-lg hover:bg-gray-600 transition duration-200"
-        >
-          Click
-          <FaArrowUp />
-        </button>
+
+        <Link href={"/chat"}>
+          <button
+            onClick={handleSearch}
+            className="w-full border-gray-700 bg-secondary-dark text-white py-2 flex gap-3 justify-center items-center rounded-b-lg hover:bg-gray-600 transition duration-200"
+          >
+            Click
+            <FaArrowUp />
+          </button>
+        </Link>
       </div>
     </div>
   );

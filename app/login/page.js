@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useLoginMutation } from "../redux/features/authSlice";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 import { saveTokens } from "../service/authService";
 
 const SignIn = () => {
@@ -19,8 +19,7 @@ const SignIn = () => {
       }).unwrap(); // Unwrap the promise to handle errors explicitly
 
       if (response.success) {
-      
-        await saveTokens(response.data.accessToken)
+        await saveTokens(response.data.accessToken);
         localStorage.setItem("accessToken", response.data.accessToken);
         Cookies.set("accessToken", response.data.accessToken, {
           expires: 1,
@@ -30,7 +29,7 @@ const SignIn = () => {
         });
         localStorage.setItem("refreshToken", response.data.refreshToken);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-         
+
         Swal.fire({
           title: "Login Successful!",
           text: "You have successfully logged in.",
@@ -39,7 +38,7 @@ const SignIn = () => {
           showConfirmButton: false,
         });
         setTimeout(() => {
-          router.push("/chat"); 
+          router.push("/chat");
         }, 1500);
       } else {
         Swal.fire({
@@ -59,8 +58,8 @@ const SignIn = () => {
   };
 
   return (
-    <div className="w-full h-screen px-5 flex justify-center items-center">
-      <div className="bg-white py-10 px-8 rounded-lg shadow-md w-[500px] mx-1">
+    <div className="w-full h-screen lg:px-5 px-2 flex justify-center items-center">
+      <div className="bg-white py-10 lg:px-8 px-4 rounded-lg shadow-md w-[500px] mx-1">
         <div className="text-center space-y-4">
           <h1 className="text-[30px] font-semibold text-primaryText">
             Log In Now
@@ -80,7 +79,11 @@ const SignIn = () => {
           <Form.Item
             name="email"
             rules={[
-              { required: true, message: "Please input your email!", type: "email" },
+              {
+                required: true,
+                message: "Please input your email!",
+                type: "email",
+              },
             ]}
           >
             <Input placeholder="Email" className="rounded-lg py-3" />
@@ -90,7 +93,10 @@ const SignIn = () => {
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <Input.Password placeholder="Password" className="rounded-lg py-3" />
+            <Input.Password
+              placeholder="Password"
+              className="rounded-lg py-3"
+            />
           </Form.Item>
 
           <div className="flex justify-end">
@@ -112,11 +118,22 @@ const SignIn = () => {
           </Form.Item>
         </Form>
 
-        <div className="flex justify-center items-center gap-2 mt-3">
+        {/* <div className="flex justify-center items-center gap-2 mt-3">
           <p>Don't have an account?</p>
           <Link href="/register" passHref>
             <Button className="text-primaryText font-lora" type="link">
               Sign Up
+            </Button>
+          </Link>
+        </div> */}
+        <div className="flex justify-center items-center gap-2 mt-6 text-sm text-gray-600">
+          <p className="lg:text-lg">Don't have an account?</p>
+          <Link href="/register" passHref>
+            <Button
+              type="link"
+              className="text-black lg:text-lg hover:text-primary-dark font-medium p-0 h-auto transition-colors duration-200"
+            >
+              Sign up
             </Button>
           </Link>
         </div>

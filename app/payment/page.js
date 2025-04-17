@@ -84,7 +84,6 @@ function App() {
     }
 
     if (isAlreadySubscribed) {
-   
       return;
     }
 
@@ -92,7 +91,6 @@ function App() {
       const result = await packagePost({
         packageId: selectedPackage._id,
       }).unwrap();
-    
 
       // Save the Stripe payment URL
       if (result?.url) {
@@ -118,7 +116,7 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col items-center pt-16 px-4 text-[#3d3929] space-y-5">
       {/* Logo and Title */}
-      <Link href={'/chat'}>
+      <Link href={"/chat"}>
         <div className="flex gap-3">
           <Image
             className="w-[22px] h-[33px]"
@@ -134,7 +132,7 @@ function App() {
       {/* Package Selector */}
       <div className="text-center mb-12">
         <h1 className="lg:text-5xl text-4xl font-normal text-[#3d3929] mb-8">
-          Choose your plan
+          {selectedPackage?.length > 0 ? "Choose your plan" : "Plan not updated yet !"}
         </h1>
         <div className="inline-flex rounded-full bg-[#e8e6dc] p-1">
           {packagesData?.data?.map((pkg) => (
