@@ -81,9 +81,9 @@ export default function HomeFirstPage() {
                 <div className="pb-5 lg:flex justify-between items-center">
                   <h1>
                     Upload documents, images, and more to collaborate with
-                    father
+                    HolyBot
                   </h1>
-                  <div className="flex gap-4 text-center items-center justify-center cursor-pointer">
+                  {/* <div className="flex gap-4 text-center items-center justify-center cursor-pointer">
                     <div className="flex gap-4 text-center items-center justify-center  cursor-pointer">
                       <svg
                         width="24"
@@ -122,7 +122,7 @@ export default function HomeFirstPage() {
                         />
                       </svg>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="lg:flex gap-3 mt-4 lg:space-y-0 space-y-4">
                   <Link href={"/chat"}>
